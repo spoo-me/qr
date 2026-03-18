@@ -3,94 +3,203 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='images/logo.png') }}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/static/images/logo.png" />
 
-  <!-- Primary Meta Tags -->
-  <title>QR Code Generator</title>
-  <meta name="title" content="Advanced QR Code Generator API" />
-  <meta name="description" content="Open-source qrcode generator api in written python" />
+  <title>QR Code Generator — spoo.me</title>
+  <meta name="title" content="QR Code Generator API — spoo.me" />
+  <meta name="description" content="Open-source QR code generator with classic, gradient, and styled output." />
 
-  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://qr.spoo.me/" />
-  <meta property="og:title" content="Advanced QR Code Generator API" />
-  <meta property="og:description" content="Open-source qrcode generator api in written python" />
-  <meta property="og:image" content="{{ url_for('static', filename='images/banner.png') }}" />
+  <meta property="og:title" content="QR Code Generator API — spoo.me" />
+  <meta property="og:description" content="Open-source QR code generator with classic, gradient, and styled output." />
+  <meta property="og:image" content="/static/images/banner.png" />
 
-  <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://qr.spoo.me/" />
-  <meta property="twitter:title" content="Advanced QR Code Generator API" />
-  <meta property="twitter:description" content="Open-source qrcode generator api in written python" />
-  <meta property="twitter:image" content="{{ url_for('static', filename='images/banner.png') }}" />
+  <meta property="twitter:title" content="QR Code Generator API — spoo.me" />
+  <meta property="twitter:description" content="Open-source QR code generator with classic, gradient, and styled output." />
+  <meta property="twitter:image" content="/static/images/banner.png" />
 
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/index-style.css') }}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200&display=swap" rel="stylesheet" />
-
-  <title>Modern QR Code Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+  <link rel="stylesheet" href="/static/css/index-style.css" />
 </head>
 
 <body>
-  <div class="navbar">
-    <div class="navbar-logo">
-      <img src="/static/images/logo.png" alt="Logo" class="logo" />
-      <div class="site-name">QR Code Generator</div>
-    </div>
-    <div class="navbar-links">
-      <a href="https://github.com/zingzy/qrcode-api" class="navbar-link">API DOCS</a>
-    </div>
-  </div>
-
-  <label id="text-input-text" for="qr-input">Enter text or URL</label>
-  <input type="text" id="qr-input" placeholder="Enter text or URL" required />
-  <div id="optional-params">
-    <div class="qr-type-div">
-      <label for="qr-type">QR Code Style</label>
-      <select id="qr-type" onchange="toggleColorOptions()">
-        <option value="simple">Simple QR</option>
-        <option value="radial">Gradient QR</option>
-      </select>
-    </div>
-
-    <div id="simple-config">
-      <div id="fill-color">
-        <label for="fill-color">Fill Color</label>
-        <input type="color" id="fill-color-input" class="color-input" value="#000000" />
+  <header>
+    <div class="header-inner">
+      <div class="logo-group">
+        <img src="/static/images/logo.png" alt="Logo" width="32" height="32" />
+        <span class="wordmark">QR Code Generator</span>
       </div>
+      <nav>
+        <a href="https://spoo.me/docs/qr/introduction" class="nav-link" target="_blank" rel="noopener"><i class="ti ti-api"></i> <span class="nav-link-text">API Docs</span></a>
+        <a href="https://github.com/spoo-me/qr" class="nav-link" target="_blank" rel="noopener"><i class="ti ti-brand-github"></i> <span class="nav-link-text">GitHub</span></a>
+        <button id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+          <i id="icon-sun" class="ti ti-sun"></i>
+          <i id="icon-moon" class="ti ti-moon"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
 
-      <div id="background-color">
-        <label for="background-color">Background Color</label>
-        <input type="color" id="background-color-input" class="color-input" value="#ffffff" />
-      </div>
+  <main>
+    <!-- Left: controls -->
+    <div class="controls">
+      <section class="card">
+        <div class="field">
+          <label for="qr-input"><i class="ti ti-link"></i> Text or URL</label>
+          <textarea id="qr-input" placeholder="https://example.com" rows="1" autocomplete="off"></textarea>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="qr-type"><i class="ti ti-category"></i> Type</label>
+            <div class="select-wrap">
+              <select id="qr-type">
+                <option value="classic">Classic</option>
+                <option value="gradient">Gradient</option>
+              </select>
+              <i class="ti ti-chevron-down select-icon"></i>
+            </div>
+          </div>
+          <div class="field">
+            <label for="module-style"><i class="ti ti-grid-dots"></i> Module Shape</label>
+            <div class="select-wrap">
+              <select id="module-style">
+                <option value="rounded">Rounded</option>
+                <option value="square">Square</option>
+                <option value="circle">Circle</option>
+                <option value="gapped">Gapped</option>
+                <option value="horizontal_bars">Horizontal Bars</option>
+                <option value="vertical_bars">Vertical Bars</option>
+              </select>
+              <i class="ti ti-chevron-down select-icon"></i>
+            </div>
+          </div>
+          <div class="field">
+            <label for="output-format"><i class="ti ti-file-type-png"></i> Format</label>
+            <div class="select-wrap">
+              <select id="output-format">
+                <option value="png">PNG</option>
+                <option value="svg">SVG</option>
+              </select>
+              <i class="ti ti-chevron-down select-icon"></i>
+            </div>
+          </div>
+        </div>
+
+        <div id="classic-colors" class="field-row">
+          <div class="field">
+            <label for="fill-color"><i class="ti ti-paint"></i> Fill Color</label>
+            <div class="color-field">
+              <input type="color" id="fill-color" value="#000000" />
+              <span class="color-label" id="fill-color-label">#000000</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="back-color"><i class="ti ti-paint-off"></i> Background</label>
+            <div class="color-field">
+              <input type="color" id="back-color" value="#ffffff" />
+              <span class="color-label" id="back-color-label">#ffffff</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="gradient-colors" style="display:none">
+          <div class="field-row">
+            <div class="field">
+              <label for="gradient1-color"><i class="ti ti-color-swatch"></i> Gradient Start</label>
+              <div class="color-field">
+                <input type="color" id="gradient1-color" value="#6a1a4c" />
+                <span class="color-label" id="gradient1-color-label">#6a1a4c</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="gradient2-color"><i class="ti ti-color-swatch"></i> Gradient End</label>
+              <div class="color-field">
+                <input type="color" id="gradient2-color" value="#40353c" />
+                <span class="color-label" id="gradient2-color-label">#40353c</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="gradient-back-color"><i class="ti ti-paint-off"></i> Background</label>
+              <div class="color-field">
+                <input type="color" id="gradient-back-color" value="#ffffff" />
+                <span class="color-label" id="gradient-back-color-label">#ffffff</span>
+              </div>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="gradient-type"><i class="ti ti-arrow-autofit-down"></i> Direction</label>
+              <div class="select-wrap">
+                <select id="gradient-type">
+                  <option value="vertical">Vertical</option>
+                  <option value="horizontal">Horizontal</option>
+                  <option value="radial">Radial</option>
+                  <option value="square">Square</option>
+                </select>
+                <i class="ti ti-chevron-down select-icon"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="qr-size"><i class="ti ti-dimensions"></i> Size (px)</label>
+            <input type="number" id="qr-size" placeholder="Auto" min="10" max="1000" />
+          </div>
+          <div class="field">
+            <label for="logo-upload"><i class="ti ti-photo-up"></i> Logo (optional)</label>
+            <input type="file" id="logo-upload" accept="image/*" />
+          </div>
+        </div>
+      </section>
+
+      <button id="generate-btn"><i class="ti ti-qrcode"></i> Generate</button>
+
+      <div id="error-banner" style="display:none"></div>
     </div>
 
-    <div id="radial-config">
-      <div id="gradient-color">
-        <label for="gradient-color">Inner Gradient Color</label>
-        <input type="color" id="gradient-color-input" class="color-input" value="#758156" />
+    <!-- Right: preview -->
+    <aside class="preview">
+      <div class="preview-card card" id="preview-card">
+        <h2 class="card-title"><i class="ti ti-eye"></i> Preview</h2>
+
+        <div id="preview-empty" class="preview-empty">
+          <i class="ti ti-qrcode empty-icon"></i>
+          <p>Your QR code will appear here</p>
+        </div>
+
+        <div id="preview-loading" style="display:none">
+          <div class="spinner"></div>
+        </div>
+
+        <div id="preview-result" style="display:none">
+          <div id="qr-output"></div>
+          <div class="preview-actions">
+            <button id="download-btn" class="btn-secondary">
+              <i class="ti ti-download"></i> Download
+            </button>
+          </div>
+        </div>
       </div>
+    </aside>
+  </main>
 
-      <div id="gradient2-color">
-        <label for="gradient2-color">Outer Gradient Color</label>
-        <input type="color" id="gradient2-color-input" class="color-input" value="#67AF26" />
-      </div>
-    </div>
+  <footer>
+    <span>Built with ❤️ by <a href="https://spoo.me" target="_blank" rel="noopener">spoo.me</a></span>
+  </footer>
 
-    <button id="generate-btn" onclick="generateQRCode()">
-      GENERATE
-    </button>
-
-    <div id="qr-code-master">
-      <div id="qr-code"></div>
-    </div>
-
-    <div id="loading-spinner"></div>
-
-    <script src="{{ url_for('static', filename='js/index-script.js') }}" defer></script>
-
+  <script src="/static/js/index-script.js" defer></script>
 </body>
 
 </html>
