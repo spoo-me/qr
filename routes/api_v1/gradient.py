@@ -6,8 +6,10 @@ from __future__ import annotations
 
 from typing import Optional
 
-from fastapi import APIRouter, Depends, File, Query, UploadFile
+from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
 from fastapi.responses import StreamingResponse
+
+from errors import ValidationError
 
 from dependencies.services import get_qr_service
 from middleware.openapi import ERROR_RESPONSES
@@ -69,23 +71,24 @@ async def generate_gradient_get(
         "Same as GET, plus an optional logo image file to embed in the center.\n\n"
         "Send the logo as a **multipart file upload** in the `logo` field:\n\n"
         "```bash\n"
-        'curl -X POST "https://qr.spoo.me/api/v1/gradient?content=https://example.com" \\\n'
+        'curl -X POST "https://qr.spoo.me/api/v1/gradient" \\\n'
+        '  -F "content=https://example.com" \\\n'
         '  -F "logo=@my-logo.png"\n'
         "```"
     ),
 )
 async def generate_gradient_post(
-    content: str = Query(..., description="Text or URL to encode"),
-    start: str = Query(
+    content: str = Form(..., description="Text or URL to encode"),
+    start: str = Form(
         "#6a1a4c", description="Gradient start color (hex, name, or RGB)"
     ),
-    end: str = Query("#40353c", description="Gradient end color (hex, name, or RGB)"),
-    background: str = Query("#ffffff", description="Background color"),
-    size: Optional[int] = Query(
+    end: str = Form("#40353c", description="Gradient end color (hex, name, or RGB)"),
+    background: str = Form("#ffffff", description="Background color"),
+    size: Optional[int] = Form(
         None, ge=10, le=1000, description="Output size in pixels"
     ),
-    style: ModuleStyle = Query(ModuleStyle.SQUARE, description="Module drawing style"),
-    direction: GradientDirection = Query(
+    style: ModuleStyle = Form(ModuleStyle.SQUARE, description="Module drawing style"),
+    direction: GradientDirection = Form(
         GradientDirection.VERTICAL, description="Gradient direction"
     ),
     logo: Optional[UploadFile] = File(
@@ -93,7 +96,12 @@ async def generate_gradient_post(
     ),
     qr_service: QRService = Depends(get_qr_service),
 ) -> StreamingResponse:
-    logo_bytes = await logo.read() if logo else None
+    MAX_LOGO_SIZE = 2 * 1024 * 1024  # 2 MB
+    logo_bytes = None
+    if logo:
+        logo_bytes = await logo.read()
+        if len(logo_bytes) > MAX_LOGO_SIZE:
+            raise ValidationError("Logo file size must not exceed 2 MB", field="logo")
     stream, media_type = await qr_service.generate_gradient(
         content=content,
         start=start,

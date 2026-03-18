@@ -5,6 +5,8 @@ Batch QR code generation endpoint.
 from __future__ import annotations
 
 import io
+import os
+import re
 import zipfile
 from typing import Optional
 
@@ -77,7 +79,10 @@ async def generate_batch(
         for i, (stream, _) in enumerate(results):
             item = body.items[i]
             ext = "svg" if item.output == OutputFormat.SVG else "png"
-            filename = item.filename or f"qrcode_{i + 1}"
+            raw_name = item.filename or f"qrcode_{i + 1}"
+            # Sanitize: strip path components and drive letters to prevent zip slip
+            filename = os.path.basename(raw_name)
+            filename = re.sub(r"[^\w\-.]", "_", filename) or f"qrcode_{i + 1}"
             if not filename.endswith(f".{ext}"):
                 filename = f"{filename}.{ext}"
             zf.writestr(filename, stream.read())

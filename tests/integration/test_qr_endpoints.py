@@ -9,7 +9,7 @@ class TestClassicEndpoint:
         assert resp.content[:4] == b"\x89PNG"
 
     def test_post(self, client):
-        resp = client.post("/api/v1/classic", params={"content": "hello"})
+        resp = client.post("/api/v1/classic", data={"content": "hello"})
         assert resp.status_code == 200
 
     def test_colors(self, client):
@@ -84,7 +84,7 @@ class TestClassicEndpoint:
         img.save(buf, format="PNG")
         resp = client.post(
             "/api/v1/classic",
-            params={"content": "https://example.com"},
+            data={"content": "https://example.com"},
             files={"logo": ("logo.png", buf.getvalue(), "image/png")},
         )
         assert resp.status_code == 200
@@ -144,7 +144,7 @@ class TestGradientEndpoint:
         img.save(buf, format="PNG")
         resp = client.post(
             "/api/v1/gradient",
-            params={"content": "https://example.com"},
+            data={"content": "https://example.com"},
             files={"logo": ("logo.png", buf.getvalue(), "image/png")},
         )
         assert resp.status_code == 200

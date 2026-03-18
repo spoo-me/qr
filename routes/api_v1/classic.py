@@ -6,8 +6,10 @@ from __future__ import annotations
 
 from typing import Optional
 
-from fastapi import APIRouter, Depends, File, Query, UploadFile
+from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
 from fastapi.responses import StreamingResponse
+
+from errors import ValidationError
 
 from dependencies.services import get_qr_service
 from middleware.openapi import ERROR_RESPONSES
@@ -59,26 +61,32 @@ async def generate_classic_get(
         "Same as GET, plus an optional logo image file to embed in the center.\n\n"
         "Send the logo as a **multipart file upload** in the `logo` field:\n\n"
         "```bash\n"
-        'curl -X POST "https://qr.spoo.me/api/v1/classic?content=https://example.com" \\\n'
+        'curl -X POST "https://qr.spoo.me/api/v1/classic" \\\n'
+        '  -F "content=https://example.com" \\\n'
         '  -F "logo=@my-logo.png"\n'
         "```"
     ),
 )
 async def generate_classic_post(
-    content: str = Query(..., description="Text or URL to encode"),
-    color: str = Query("black", description="Fill color (hex, name, or RGB)"),
-    background: str = Query("white", description="Background color"),
-    size: Optional[int] = Query(
+    content: str = Form(..., description="Text or URL to encode"),
+    color: str = Form("black", description="Fill color (hex, name, or RGB)"),
+    background: str = Form("white", description="Background color"),
+    size: Optional[int] = Form(
         None, ge=10, le=1000, description="Output size in pixels"
     ),
-    style: ModuleStyle = Query(ModuleStyle.ROUNDED, description="Module drawing style"),
-    output: OutputFormat = Query(OutputFormat.PNG, description="Output format"),
+    style: ModuleStyle = Form(ModuleStyle.ROUNDED, description="Module drawing style"),
+    output: OutputFormat = Form(OutputFormat.PNG, description="Output format"),
     logo: Optional[UploadFile] = File(
         None, description="Logo image to embed (optional)"
     ),
     qr_service: QRService = Depends(get_qr_service),
 ) -> StreamingResponse:
-    logo_bytes = await logo.read() if logo else None
+    MAX_LOGO_SIZE = 2 * 1024 * 1024  # 2 MB
+    logo_bytes = None
+    if logo:
+        logo_bytes = await logo.read()
+        if len(logo_bytes) > MAX_LOGO_SIZE:
+            raise ValidationError("Logo file size must not exceed 2 MB", field="logo")
     effective_output = OutputFormat.PNG if logo_bytes else output
     stream, media_type = await qr_service.generate_classic(
         content=content,

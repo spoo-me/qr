@@ -1,7 +1,5 @@
 """
 OpenAPI schema configuration — tags, metadata, and response declarations.
-
-Called once during app creation to configure the Swagger UI at /api-docs.
 """
 
 from __future__ import annotations

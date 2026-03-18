@@ -56,3 +56,15 @@ class TestParseColor:
     def test_invalid_tuple_too_few_values(self):
         with pytest.raises(ValidationError):
             parse_color("(1,2)")
+
+    def test_rgb_channel_out_of_range(self):
+        with pytest.raises(ValidationError):
+            parse_color("rgb(999,0,0)")
+
+    def test_rgb_negative_channel(self):
+        with pytest.raises(ValidationError):
+            parse_color("rgb(-1,0,0)")
+
+    def test_tuple_channel_out_of_range(self):
+        with pytest.raises(ValidationError):
+            parse_color("(256,0,0)")

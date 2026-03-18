@@ -1,12 +1,10 @@
-<image src="https://spoo.me/static/images/banner-rounded.png">
-
 <h3 align="center">qr.spoo.me</h3>
-<p align="center">Open-Source QR Code Generator API</p>
+<p align="center">Open-Source QR Code API</p>
 
 <p align="center">
     <a href="#-features"><kbd>Features</kbd></a>
     <a href="#-endpoints"><kbd>Endpoints</kbd></a>
-    <a href="https://qr.spoo.me/api-docs" target="_blank"><kbd>API Docs</kbd></a>
+    <a href="https://qr.spoo.me/docs" target="_blank"><kbd>API Docs</kbd></a>
     <a href="#-getting-started"><kbd>Getting Started</kbd></a>
     <a href="#-contributing"><kbd>Contributing</kbd></a>
 </p>
@@ -22,8 +20,6 @@
 
 **qr.spoo.me** is the QR code generation sub-service of [spoo.me](https://spoo.me). It provides a fast, free, open-source API for generating styled QR codes with support for multiple output formats, gradient coloring, logo embedding, and batch generation.
 
-Built with **FastAPI**, following SOLID principles with a layered service-oriented architecture.
-
 # Features
 
 - `Classic QR Codes` - Solid fill and background colors with customizable module styles
@@ -32,8 +28,6 @@ Built with **FastAPI**, following SOLID principles with a layered service-orient
 - `SVG & PNG Output` - Choose between raster and vector formats
 - `Logo Embedding` - Embed a logo image in the center of any QR code
 - `Batch Generation` - Generate up to 20 QR codes in a single request (ZIP archive)
-- `Structured Data` - Encode vCard contacts, WiFi configs, calendar events, geo locations, and more
-- `Auto-Generated Docs` - Interactive Swagger UI at `/api-docs`
 - `Fully Async` - Non-blocking I/O with CPU-bound work offloaded to thread pool
 - `Open Source` - Free to use and self-host
 
@@ -49,8 +43,7 @@ All API endpoints are under `/api/v1`.
 | `POST` | `/api/v1/gradient/logo` | Gradient QR code with embedded logo |
 | `POST` | `/api/v1/batch` | Batch generate up to 20 QR codes (ZIP) |
 | `GET/POST` | `/health` | Health check |
-| `GET` | `/` | Web UI |
-| `GET` | `/api-docs` | Swagger UI |
+| `GET` | `/docs` | Swagger UI |
 
 ## Classic QR Code
 
@@ -104,22 +97,6 @@ curl -X POST "https://qr.spoo.me/api/v1/batch" \
   --output qrcodes.zip
 ```
 
-## Structured Data Formats
-
-Use the `format` and `formattings` parameters to encode structured data:
-
-| Format | Example `formattings` |
-|--------|----------------------|
-| `contact` | `{"name": "John", "phone": "555-1234", "email": "john@example.com"}` |
-| `wifi` | `{"ssid": "MyNetwork", "password": "secret123"}` |
-| `event` | `{"title": "Meeting", "location": "Room 1"}` |
-| `location` | `{"latitude": 40.7128, "longitude": -74.006}` |
-| `email` | `{"email": "hi@example.com", "subject": "Hello", "message": "Hi there"}` |
-| `tel` | `{"number": "+15551234567"}` |
-| `sms` | `{"phone": "+15551234567", "message": "Hello!"}` |
-| `bookmark` | `{"title": "Google", "url": "https://google.com"}` |
-| `bitcoin` | `{"address": "1Abc...", "amount": 0.001}` |
-
 # Getting Started
 
 <details>
@@ -136,7 +113,7 @@ Use the `format` and `formattings` parameters to encode structured data:
 
 ```bash
 git clone https://github.com/spoo-me/qr.git
-cd qrcode-api
+cd qr
 cp .env.example .env
 docker compose up -d --build
 ```
@@ -175,7 +152,7 @@ cp .env.example .env
 uv run uvicorn main:app --reload --no-access-log
 ```
 
-The API will be available at `http://localhost:8000`. Swagger docs at `http://localhost:8000/api-docs`.
+The API will be available at `http://localhost:8000`. Swagger docs at `http://localhost:8000/docs`.
 
 ### Run tests
 
@@ -238,7 +215,7 @@ Contributions are always welcome! Here's how you can contribute:
 <h6 align="center">
 <img src="https://spoo.me/static/images/favicon.png" height=30 title="Spoo.me Copyright">
 <br>
-&copy; spoo.me . 2025
+&copy; spoo.me . 2026
 
 All Rights Reserved</h6>
 

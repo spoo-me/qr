@@ -121,8 +121,11 @@ document.getElementById("generate-btn").addEventListener("click", function () {
 
   if (useLogo) {
     var formData = new FormData();
+    params.forEach(function (value, key) {
+      formData.append(key, value);
+    });
     formData.append("logo", logoFile);
-    fetch(basePath + "?" + params.toString(), { method: "POST", body: formData })
+    fetch(basePath, { method: "POST", body: formData })
       .then(handleResponse)
       .catch(handleError);
   } else {

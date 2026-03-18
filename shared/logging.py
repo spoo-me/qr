@@ -31,8 +31,8 @@ REDACTED_FIELDS = {
     "password",
     "token",
     "api_key",
-    "Authorization",
-    "Cookie",
+    "authorization",
+    "cookie",
     "secret",
     "key",
 }
@@ -106,7 +106,6 @@ def configure_structlog() -> None:
         structlog.contextvars.merge_contextvars,
         structlog.stdlib.add_log_level,
         structlog.stdlib.add_logger_name,
-        add_timestamp,
         structlog.processors.TimeStamper(fmt="iso"),
         structlog.stdlib.PositionalArgumentsFormatter(),
         structlog.processors.StackInfoRenderer(),

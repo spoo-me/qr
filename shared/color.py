@@ -26,6 +26,14 @@ NAMED_COLORS: dict[str, tuple[int, int, int] | str] = {
 }
 
 
+def _validate_channels(values: list[int]) -> tuple[int, int, int]:
+    """Validate that RGB channel values are within [0, 255]."""
+    for v in values:
+        if not 0 <= v <= 255:
+            raise ValueError(f"Color channel value {v} out of range [0, 255]")
+    return tuple(values)
+
+
 def parse_color(color_str: str) -> tuple[int, int, int] | str:
     """Parse a color string into an RGB tuple or 'transparent'.
 
@@ -46,14 +54,14 @@ def parse_color(color_str: str) -> tuple[int, int, int] | str:
             inner = color_str[4:-1]
             values = [int(x.strip()) for x in inner.split(",")]
             if len(values) == 3:
-                return tuple(values)
+                return _validate_channels(values)
             raise ValueError("Invalid RGB color format")
 
         if color_str.startswith("(") and color_str.endswith(")"):
             inner = color_str[1:-1]
             values = [int(x.strip()) for x in inner.split(",")]
             if len(values) == 3:
-                return tuple(values)
+                return _validate_channels(values)
             raise ValueError("Invalid RGB color format")
 
         # Assume bare hex without # prefix
