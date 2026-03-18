@@ -31,7 +31,6 @@ API_DESCRIPTION = (
     "- SVG and PNG output formats\n"
     "- Logo/image embedding in QR codes\n"
     "- Batch QR code generation\n"
-    "- Structured data formats (vCard, WiFi, Bitcoin, iCal, geo, etc.)\n\n"
     "**Base URL:** `https://qr.spoo.me`"
 )
 

@@ -5,20 +5,6 @@ Enumerations used across the QR code service.
 from enum import Enum
 
 
-class DataFormat(str, Enum):
-    """Supported structured data formats for QR code content."""
-
-    CONTACT = "contact"
-    EVENT = "event"
-    BOOKMARK = "bookmark"
-    WIFI = "wifi"
-    BITCOIN = "bitcoin"
-    LOCATION = "location"
-    SMS = "sms"
-    EMAIL = "email"
-    TEL = "tel"
-
-
 class ModuleStyle(str, Enum):
     """QR code module (pixel) drawing styles."""
 

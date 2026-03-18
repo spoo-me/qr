@@ -8,9 +8,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict, field_validator, model_validator
-
-from schemas.enums import DataFormat
+from pydantic import BaseModel, ConfigDict, field_validator
 
 
 class ClassicQRRequest(BaseModel):
@@ -18,12 +16,10 @@ class ClassicQRRequest(BaseModel):
 
     model_config = ConfigDict(populate_by_name=True)
 
-    text: Optional[str] = None
+    text: str
     fill: str = "black"
     back: str = "white"
     size: Optional[int] = None
-    format: Optional[DataFormat] = None
-    formattings: Optional[str] = None
 
     @field_validator("size")
     @classmethod
@@ -34,14 +30,6 @@ class ClassicQRRequest(BaseModel):
             if v < 10:
                 raise ValueError("Size is too small")
         return v
-
-    @model_validator(mode="after")
-    def validate_text_or_format(self) -> "ClassicQRRequest":
-        if not self.text and not self.format:
-            raise ValueError("Text parameter is missing")
-        if self.format and not self.formattings:
-            raise ValueError("Formattings parameter is missing")
-        return self
 
 
 class GradientQRRequest(BaseModel):
@@ -49,13 +37,11 @@ class GradientQRRequest(BaseModel):
 
     model_config = ConfigDict(populate_by_name=True)
 
-    text: Optional[str] = None
+    text: str
     gradient1: str = "(106,26,76)"
     gradient2: str = "(64,53,60)"
     back: str = "(255, 255, 255)"
     size: Optional[int] = None
-    format: Optional[DataFormat] = None
-    formattings: Optional[str] = None
 
     @field_validator("size")
     @classmethod
@@ -66,11 +52,3 @@ class GradientQRRequest(BaseModel):
             if v < 10:
                 raise ValueError("Size is too small")
         return v
-
-    @model_validator(mode="after")
-    def validate_text_or_format(self) -> "GradientQRRequest":
-        if not self.text and not self.format:
-            raise ValueError("Text parameter is missing")
-        if self.format and not self.formattings:
-            raise ValueError("Formattings parameter is missing")
-        return self

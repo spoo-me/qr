@@ -89,13 +89,6 @@ class TestClassicEndpoint:
         )
         assert resp.status_code == 200
 
-    def test_wifi_content(self, client):
-        """User passes pre-formatted WiFi string directly."""
-        resp = client.get(
-            "/api/v1/classic", params={"content": "WIFI:T:WPA;S:MyNet;P:secret;;"}
-        )
-        assert resp.status_code == 200
-
 
 class TestGradientEndpoint:
     def test_get(self, client):
