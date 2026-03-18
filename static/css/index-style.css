@@ -1,282 +1,472 @@
+/* ── Reset & base ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #fafafa;
+  --bg-card: #ffffff;
+  --border: #e4e4e7;
+  --text: #09090b;
+  --text-muted: #71717a;
+  --text-subtle: #a1a1aa;
+  --accent: #18181b;
+  --accent-hover: #27272a;
+  --ring: rgba(9, 9, 11, 0.08);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -2px rgba(0,0,0,0.04);
+  --radius: 8px;
+  --radius-lg: 12px;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --error-bg: #fef2f2;
+  --error-text: #991b1b;
+  --error-border: #fecaca;
+  --empty-color: #d4d4d8;
+}
+
+[data-theme="dark"] {
+  --bg: #09090b;
+  --bg-card: #18181b;
+  --border: #27272a;
+  --text: #fafafa;
+  --text-muted: #a1a1aa;
+  --text-subtle: #52525b;
+  --accent: #fafafa;
+  --accent-hover: #e4e4e7;
+  --ring: rgba(250, 250, 250, 0.08);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -2px rgba(0,0,0,0.2);
+  --error-bg: #1c1013;
+  --error-text: #fca5a5;
+  --error-border: #450a0a;
+  --empty-color: #3f3f46;
+}
+
 html {
-    scroll-behavior: smooth;
+  font-family: var(--font);
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
-    font-family: "JetBrains Mono", monospace;
-    text-align: center;
-    margin: 0;
-    background-color: #fefefe;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: repeat;
-    background-image: url("data:image/svg+xml;utf8,%3Csvg viewBox=%220 0 2000 1400%22 xmlns=%22http:%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cmask id=%22b%22 x=%220%22 y=%220%22 width=%222000%22 height=%221400%22%3E%3Cpath fill=%22url(%23a)%22 d=%22M0 0h2000v1400H0z%22%2F%3E%3C%2Fmask%3E%3Cpath fill=%22%23fff%22 d=%22M0 0h2000v1400H0z%22%2F%3E%3Cg style=%22transform-origin:center center%22 stroke=%22%23ddd%22 stroke-width=%222%22 mask=%22url(%23b)%22%3E%3Cpath fill=%22none%22 d=%22M0 0h100v100H0z%22%2F%3E%3Cpath fill=%22%23dddddda2%22 d=%22M100 0h100v100H100z%22%2F%3E%3Cpath fill=%22%23dddddd4a%22 d=%22M200 0h100v100H200z%22%2F%3E%3Cpath fill=%22none%22 d=%22M300 0h100v100H300zM400 0h100v100H400zM500 0h100v100H500zM600 0h100v100H600z%22%2F%3E%3Cpath fill=%22%23dddddd24%22 d=%22M700 0h100v100H700z%22%2F%3E%3Cpath fill=%22%23dddddd34%22 d=%22M800 0h100v100H800z%22%2F%3E%3Cpath fill=%22none%22 d=%22M900 0h100v100H900zM1000 0h100v100h-100zM1100 0h100v100h-100zM1200 0h100v100h-100zM1300 0h100v100h-100zM1400 0h100v100h-100zM1500 0h100v100h-100z%22%2F%3E%3Cpath fill=%22%23ddddddd1%22 d=%22M1600 0h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1700 0h100v100h-100z%22%2F%3E%3Cpath fill=%22%23ddddddc0%22 d=%22M1800 0h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1900 0h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd5a%22 d=%22M0 100h100v100H0z%22%2F%3E%3Cpath fill=%22none%22 d=%22M100 100h100v100H100zM200 100h100v100H200z%22%2F%3E%3Cpath fill=%22%23ddddddb4%22 d=%22M300 100h100v100H300z%22%2F%3E%3Cpath fill=%22%23ddddddbd%22 d=%22M400 100h100v100H400z%22%2F%3E%3Cpath fill=%22%23ddddddb1%22 d=%22M500 100h100v100H500z%22%2F%3E%3Cpath fill=%22none%22 d=%22M600 100h100v100H600zM700 100h100v100H700z%22%2F%3E%3Cpath fill=%22%23dddddd3f%22 d=%22M800 100h100v100H800z%22%2F%3E%3Cpath fill=%22%23dddddddd%22 d=%22M900 100h100v100H900z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1000 100h100v100h-100zM1100 100h100v100h-100zM1200 100h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd83%22 d=%22M1300 100h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1400 100h100v100h-100zM1500 100h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd14%22 d=%22M1600 100h100v100h-100z%22%2F%3E%3Cpath fill=%22%23ddddddb0%22 d=%22M1700 100h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1800 100h100v100h-100z%22%2F%3E%3Cpath fill=%22%23ddddddfa%22 d=%22M1900 100h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd01%22 d=%22M0 200h100v100H0z%22%2F%3E%3Cpath fill=%22%23dddddd60%22 d=%22M100 200h100v100H100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M200 200h100v100H200z%22%2F%3E%3Cpath fill=%22%23ddddddf0%22 d=%22M300 200h100v100H300z%22%2F%3E%3Cpath fill=%22none%22 d=%22M400 200h100v100H400z%22%2F%3E%3Cpath fill=%22%23dddddd6b%22 d=%22M500 200h100v100H500z%22%2F%3E%3Cpath fill=%22%23dddddd23%22 d=%22M600 200h100v100H600z%22%2F%3E%3Cpath fill=%22none%22 d=%22M700 200h100v100H700zM800 200h100v100H800z%22%2F%3E%3Cpath fill=%22%23dddddded%22 d=%22M900 200h100v100H900z%22%2F%3E%3Cpath fill=%22%23ddddddc3%22 d=%22M1000 200h100v100h-100z%22%2F%3E%3Cpath fill=%22%23ddddddf2%22 d=%22M1100 200h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1200 200h100v100h-100zM1300 200h100v100h-100zM1400 200h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddde5%22 d=%22M1500 200h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1600 200h100v100h-100zM1700 200h100v100h-100zM1800 200h100v100h-100zM1900 200h100v100h-100zM0 300h100v100H0z%22%2F%3E%3Cpath fill=%22%23dddddd3e%22 d=%22M100 300h100v100H100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M200 300h100v100H200zM300 300h100v100H300zM400 300h100v100H400z%22%2F%3E%3Cpath fill=%22%23dddddd03%22 d=%22M500 300h100v100H500z%22%2F%3E%3Cpath fill=%22%23dddddd0e%22 d=%22M600 300h100v100H600z%22%2F%3E%3Cpath fill=%22none%22 d=%22M700 300h100v100H700zM800 300h100v100H800zM900 300h100v100H900z%22%2F%3E%3Cpath fill=%22%23dddddd1c%22 d=%22M1000 300h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddda7%22 d=%22M1100 300h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1200 300h100v100h-100zM1300 300h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd12%22 d=%22M1400 300h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1500 300h100v100h-100zM1600 300h100v100h-100zM1700 300h100v100h-100z%22%2F%3E%3Cpath fill=%22%23ddddddf9%22 d=%22M1800 300h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1900 300h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd20%22 d=%22M0 400h100v100H0z%22%2F%3E%3Cpath fill=%22%23ddddddf0%22 d=%22M100 400h100v100H100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M200 400h100v100H200zM300 400h100v100H300zM400 400h100v100H400zM500 400h100v100H500zM600 400h100v100H600z%22%2F%3E%3Cpath fill=%22%23dddddd68%22 d=%22M700 400h100v100H700z%22%2F%3E%3Cpath fill=%22none%22 d=%22M800 400h100v100H800zM900 400h100v100H900zM1000 400h100v100h-100zM1100 400h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd1b%22 d=%22M1200 400h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd2e%22 d=%22M1300 400h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd8b%22 d=%22M1400 400h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1500 400h100v100h-100zM1600 400h100v100h-100zM1700 400h100v100h-100zM1800 400h100v100h-100zM1900 400h100v100h-100zM0 500h100v100H0z%22%2F%3E%3Cpath fill=%22%23dddddd1c%22 d=%22M100 500h100v100H100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M200 500h100v100H200zM300 500h100v100H300zM400 500h100v100H400zM500 500h100v100H500zM600 500h100v100H600zM700 500h100v100H700zM800 500h100v100H800zM900 500h100v100H900zM1000 500h100v100h-100zM1100 500h100v100h-100zM1200 500h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd65%22 d=%22M1300 500h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddda2%22 d=%22M1400 500h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1500 500h100v100h-100zM1600 500h100v100h-100zM1700 500h100v100h-100zM1800 500h100v100h-100zM1900 500h100v100h-100zM0 600h100v100H0zM100 600h100v100H100zM200 600h100v100H200zM300 600h100v100H300zM400 600h100v100H400zM500 600h100v100H500zM600 600h100v100H600zM700 600h100v100H700z%22%2F%3E%3Cpath fill=%22%23dddddd6e%22 d=%22M800 600h100v100H800z%22%2F%3E%3Cpath fill=%22%23dddddd16%22 d=%22M900 600h100v100H900z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1000 600h100v100h-100z%22%2F%3E%3Cpath fill=%22%23ddddddf2%22 d=%22M1100 600h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1200 600h100v100h-100zM1300 600h100v100h-100zM1400 600h100v100h-100zM1500 600h100v100h-100zM1600 600h100v100h-100zM1700 600h100v100h-100zM1800 600h100v100h-100zM1900 600h100v100h-100z%22%2F%3E%3Cpath fill=%22%23ddddddac%22 d=%22M0 700h100v100H0z%22%2F%3E%3Cpath fill=%22%23dddddd52%22 d=%22M100 700h100v100H100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M200 700h100v100H200zM300 700h100v100H300z%22%2F%3E%3Cpath fill=%22%23dddddd4f%22 d=%22M400 700h100v100H400z%22%2F%3E%3Cpath fill=%22%23ddddddda%22 d=%22M500 700h100v100H500z%22%2F%3E%3Cpath fill=%22none%22 d=%22M600 700h100v100H600z%22%2F%3E%3Cpath fill=%22%23dddddd4d%22 d=%22M700 700h100v100H700z%22%2F%3E%3Cpath fill=%22%23dddddd57%22 d=%22M800 700h100v100H800z%22%2F%3E%3Cpath fill=%22%23dddddd7b%22 d=%22M900 700h100v100H900z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1000 700h100v100h-100zM1100 700h100v100h-100zM1200 700h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd37%22 d=%22M1300 700h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1400 700h100v100h-100zM1500 700h100v100h-100zM1600 700h100v100h-100z%22%2F%3E%3Cpath fill=%22%23ddddddb3%22 d=%22M1700 700h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1800 700h100v100h-100zM1900 700h100v100h-100zM0 800h100v100H0zM100 800h100v100H100zM200 800h100v100H200zM300 800h100v100H300zM400 800h100v100H400zM500 800h100v100H500zM600 800h100v100H600zM700 800h100v100H700zM800 800h100v100H800zM900 800h100v100H900z%22%2F%3E%3Cpath fill=%22%23dddddd4f%22 d=%22M1000 800h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1100 800h100v100h-100zM1200 800h100v100h-100z%22%2F%3E%3Cpath fill=%22%23ddddddb2%22 d=%22M1300 800h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1400 800h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd24%22 d=%22M1500 800h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1600 800h100v100h-100zM1700 800h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd1a%22 d=%22M1800 800h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1900 800h100v100h-100zM0 900h100v100H0zM100 900h100v100H100zM200 900h100v100H200zM300 900h100v100H300zM400 900h100v100H400zM500 900h100v100H500z%22%2F%3E%3Cpath fill=%22%23ddddddf2%22 d=%22M600 900h100v100H600z%22%2F%3E%3Cpath fill=%22none%22 d=%22M700 900h100v100H700z%22%2F%3E%3Cpath fill=%22%23dddddd02%22 d=%22M800 900h100v100H800z%22%2F%3E%3Cpath fill=%22none%22 d=%22M900 900h100v100H900zM1000 900h100v100h-100zM1100 900h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd68%22 d=%22M1200 900h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1300 900h100v100h-100zM1400 900h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd89%22 d=%22M1500 900h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1600 900h100v100h-100zM1700 900h100v100h-100zM1800 900h100v100h-100zM1900 900h100v100h-100zM0 1000h100v100H0z%22%2F%3E%3Cpath fill=%22%23dddddd27%22 d=%22M100 1000h100v100H100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M200 1000h100v100H200zM300 1000h100v100H300zM400 1000h100v100H400z%22%2F%3E%3Cpath fill=%22%23ddddddbe%22 d=%22M500 1000h100v100H500z%22%2F%3E%3Cpath fill=%22none%22 d=%22M600 1000h100v100H600zM700 1000h100v100H700z%22%2F%3E%3Cpath fill=%22%23dddddd30%22 d=%22M800 1000h100v100H800z%22%2F%3E%3Cpath fill=%22none%22 d=%22M900 1000h100v100H900zM1000 1000h100v100h-100zM1100 1000h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd4d%22 d=%22M1200 1000h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1300 1000h100v100h-100zM1400 1000h100v100h-100zM1500 1000h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd57%22 d=%22M1600 1000h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1700 1000h100v100h-100zM1800 1000h100v100h-100zM1900 1000h100v100h-100zM0 1100h100v100H0z%22%2F%3E%3Cpath fill=%22%23ddddddcc%22 d=%22M100 1100h100v100H100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M200 1100h100v100H200zM300 1100h100v100H300zM400 1100h100v100H400zM500 1100h100v100H500z%22%2F%3E%3Cpath fill=%22%23dddddd5a%22 d=%22M600 1100h100v100H600z%22%2F%3E%3Cpath fill=%22%23dddddd2f%22 d=%22M700 1100h100v100H700z%22%2F%3E%3Cpath fill=%22none%22 d=%22M800 1100h100v100H800zM900 1100h100v100H900zM1000 1100h100v100h-100z%22%2F%3E%3Cpath fill=%22%23ddddddf4%22 d=%22M1100 1100h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1200 1100h100v100h-100zM1300 1100h100v100h-100z%22%2F%3E%3Cpath fill=%22%23ddddddfc%22 d=%22M1400 1100h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1500 1100h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddddd%22 d=%22M1600 1100h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1700 1100h100v100h-100zM1800 1100h100v100h-100zM1900 1100h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd3e%22 d=%22M0 1200h100v100H0z%22%2F%3E%3Cpath fill=%22none%22 d=%22M100 1200h100v100H100zM200 1200h100v100H200zM300 1200h100v100H300zM400 1200h100v100H400zM500 1200h100v100H500zM600 1200h100v100H600zM700 1200h100v100H700zM800 1200h100v100H800z%22%2F%3E%3Cpath fill=%22%23dddddde4%22 d=%22M900 1200h100v100H900z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1000 1200h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd9b%22 d=%22M1100 1200h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1200 1200h100v100h-100zM1300 1200h100v100h-100zM1400 1200h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd17%22 d=%22M1500 1200h100v100h-100z%22%2F%3E%3Cpath fill=%22%23ddddddba%22 d=%22M1600 1200h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd39%22 d=%22M1700 1200h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1800 1200h100v100h-100zM1900 1200h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd9f%22 d=%22M0 1300h100v100H0z%22%2F%3E%3Cpath fill=%22none%22 d=%22M100 1300h100v100H100zM200 1300h100v100H200z%22%2F%3E%3Cpath fill=%22%23dddddda2%22 d=%22M300 1300h100v100H300z%22%2F%3E%3Cpath fill=%22none%22 d=%22M400 1300h100v100H400zM500 1300h100v100H500zM600 1300h100v100H600zM700 1300h100v100H700zM800 1300h100v100H800zM900 1300h100v100H900zM1000 1300h100v100h-100zM1100 1300h100v100h-100zM1200 1300h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddda6%22 d=%22M1300 1300h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1400 1300h100v100h-100z%22%2F%3E%3Cpath fill=%22%23ddddddba%22 d=%22M1500 1300h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd20%22 d=%22M1600 1300h100v100h-100z%22%2F%3E%3Cpath fill=%22none%22 d=%22M1700 1300h100v100h-100zM1800 1300h100v100h-100z%22%2F%3E%3Cpath fill=%22%23dddddd6f%22 d=%22M1900 1300h100v100h-100z%22%2F%3E%3C%2Fg%3E%3Cpath fill=%22%23f3f3f3%22 filter=%22url(%23c)%22 opacity=%22.8%22 d=%22M0 0h2000v1400H0z%22%2F%3E%3Cdefs%3E%3CradialGradient id=%22a%22%3E%3Cstop offset=%220%22 stop-color=%22%23fff%22%2F%3E%3Cstop offset=%221%22 stop-color=%22%23fff%22 stop-opacity=%220%22%2F%3E%3C%2FradialGradient%3E%3Cfilter id=%22c%22 x=%22-800%22 y=%22-560%22 width=%222800%22 height=%221960%22 filterUnits=%22userSpaceOnUse%22 primitiveUnits=%22userSpaceOnUse%22 color-interpolation-filters=%22linearRGB%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.105%22 numOctaves=%224%22 seed=%2215%22 stitchTiles=%22no-stitch%22 x=%220%22 y=%220%22 width=%222000%22 height=%221400%22 result=%22turbulence%22%2F%3E%3CfeSpecularLighting surfaceScale=%2210%22 specularConstant=%22.07%22 specularExponent=%2220%22 lighting-color=%22%23fff%22 x=%220%22 y=%220%22 width=%222000%22 height=%221400%22 in=%22turbulence%22 result=%22specularLighting%22%3E%3CfeDistantLight azimuth=%223%22 elevation=%22100%22%2F%3E%3C%2FfeSpecularLighting%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%3C%2Fsvg%3E");
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-* {
-    -webkit-tap-highlight-color: transparent;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
+/* ── Tabler icon sizing in labels & titles ────────────────────── */
+.card-title > .ti,
+label > .ti,
+.nav-link > .ti,
+#generate-btn > .ti,
+.btn-secondary > .ti {
+  font-size: 1em;
+  vertical-align: -1px;
+  margin-right: 2px;
 }
 
-/* Scrollbar Styles */
-::-webkit-scrollbar {
-    width: 10px;
+/* ── Theme toggle ─────────────────────────────────────────────── */
+#theme-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1.15rem;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+#theme-toggle:hover { color: var(--text); }
+#icon-moon { display: none; }
+[data-theme="dark"] #icon-sun { display: none; }
+[data-theme="dark"] #icon-moon { display: block; }
+
+/* ── Header ───────────────────────────────────────────────────── */
+header {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+}
+.header-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.logo-group img { border-radius: 6px; flex-shrink: 0; }
+.wordmark {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+nav { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.nav-link {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.nav-link:hover { color: var(--text); }
+
+/* ── Main — two-column layout ─────────────────────────────────── */
+main {
+  flex: 1;
+  max-width: 1180px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 32px 64px;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 28px;
+  align-items: start;
 }
 
-::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
 }
 
-::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
+/* ── Preview panel (right side) ───────────────────────────────── */
+.preview {
+  position: sticky;
+  top: 32px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.4);
+.preview-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 400px;
 }
 
-.navbar {
-    background: rgba(255, 255, 255, 0.5);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 15px;
-    backdrop-filter: blur(10px);
-    color: black;
-    margin-bottom: 40px;
+.preview-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 24px;
+  color: var(--empty-color);
+}
+.empty-icon {
+  font-size: 48px;
+  opacity: 0.35;
+}
+.preview-empty p {
+  font-size: 0.82rem;
+  color: var(--text-subtle);
 }
 
-.navbar-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+#preview-loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
 }
 
-.logo {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
+#preview-result {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-top: 8px;
 }
 
-.site-name {
-    font-size: 1.2rem;
-    font-weight: bold;
+#qr-output {
+  display: flex;
+  justify-content: center;
+}
+#qr-output img,
+#qr-output svg {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
 }
 
-.navbar-links {
-    display: flex;
-    align-items: center;
+.preview-actions {
+  display: flex;
+  gap: 10px;
 }
 
-.navbar-link {
-    margin-right: 20px;
-    text-decoration: none;
-    color: black;
-    cursor: pointer;
+/* ── Card ─────────────────────────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+}
+.card-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.navbar-link:hover {
-    text-decoration: underline;
-    /* Adjust the hover color as needed */
+/* ── Divider ──────────────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 22px 0 6px;
 }
+
+/* ── Fields ───────────────────────────────────────────────────── */
+.field { display: flex; flex-direction: column; gap: 7px; flex: 1; min-width: 0; }
+.field-row { display: flex; gap: 18px; margin-top: 18px; }
 
 label {
-    display: block;
-    margin: 10px 0;
-    color: black;
-    font-size: 25px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-input,
-select,
-button {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    background-color: #ffffff;
-    color: black;
-    outline: none;
-    transition: all 0.3s ease;
+textarea,
+input[type="number"] {
+  padding: 9px 13px;
+  font-size: 0.88rem;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s, height 0.2s ease;
+  width: 100%;
+}
+input[type="number"] {
+  height: 40px;
+  padding: 0 13px;
+}
+textarea {
+  min-height: 40px;
+  max-height: 200px;
+  resize: none;
+  overflow: hidden;
+  line-height: 1.5;
+}
+textarea:focus,
+input[type="number"]:focus {
+  border-color: var(--text-subtle);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
-#qr-input {
-    max-width: 500px;
-    width: 500px;
-    margin: 10px 10px;
-    margin-top: 20px;
-    height: 30px;
-    font-size: 20px;
+input[type="file"] {
+  font-size: 0.8rem;
+  font-family: var(--font);
+  color: var(--text-muted);
+  padding-top: 7px;
+}
+input[type="file"]::file-selector-button {
+  font-family: var(--font);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-card);
+  color: var(--text);
+  cursor: pointer;
+  margin-right: 8px;
+  transition: background 0.15s;
+}
+input[type="file"]::file-selector-button:hover { background: var(--bg); }
+
+/* ── Custom select ────────────────────────────────────────────── */
+.select-wrap {
+  position: relative;
+  width: 100%;
+}
+.select-wrap select {
+  height: 40px;
+  width: 100%;
+  padding: 0 34px 0 13px;
+  font-size: 0.88rem;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.select-wrap select:focus {
+  border-color: var(--text-subtle);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+.select-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: var(--text-muted);
+  pointer-events: none;
 }
 
-input:hover,
-select:hover {
-    border: 1px solid black;
+/* ── Color fields ─────────────────────────────────────────────── */
+.color-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+input[type="color"] {
+  width: 40px;
+  height: 40px;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  cursor: pointer;
+}
+input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
+input[type="color"]::-webkit-color-swatch { border-radius: 4px; border: none; }
+.color-label {
+  font-size: 0.78rem;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  color: var(--text-muted);
 }
 
-.qr-type-div,
-#fill-color,
-#background-color,
-#gradient-color,
-#gradient2-color {
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    margin: 20px 0 0 0;
-}
-
-#simple-config,
-#radial-config {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    max-width: 800px;
-    margin: auto;
-}
-
-#radial-config {
-    max-width: 1000px;
-}
-
-.qr-type-div select {
-    margin-top: 5px;
-}
-
-.color-input {
-    width: 80px;
-    padding: 2px 4px;
-    margin-top: 15px;
-}
-
-#text-input-text {
-    font-size: 40px;
-}
-
+/* ── Buttons ──────────────────────────────────────────────────── */
 #generate-btn {
-    background-color: black;
-    color: #ffffff;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 60px 0 20px 0;
-    padding: 15px 20px;
-    font-size: 20px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 4px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  width: 100%;
+  height: 44px;
+  font-family: var(--font);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--bg);
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+#generate-btn:hover { background: var(--accent-hover); }
+#generate-btn:active { transform: scale(0.99); }
+
+.btn-secondary {
+  height: 36px;
+  padding: 0 16px;
+  font-family: var(--font);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-secondary:hover { border-color: var(--text-subtle); }
+
+/* ── Error ────────────────────────────────────────────────────── */
+#error-banner {
+  padding: 12px 16px;
+  font-size: 0.82rem;
+  color: var(--error-text);
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  border-radius: var(--radius);
 }
 
-#generate-btn:hover {
-    transform: scale(1.1);
+/* ── Loading ──────────────────────────────────────────────────── */
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border);
+  border-top-color: var(--text);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Footer ───────────────────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 0.78rem;
+  color: var(--text-subtle);
+  border-top: 1px solid var(--border);
+}
+footer a { color: var(--text-muted); text-decoration: none; }
+footer a:hover { color: var(--text); }
+
+/* ── Responsive: tablet ───────────────────────────────────────── */
+@media (max-width: 960px) {
+  main {
+    grid-template-columns: 3fr 2fr;
+    gap: 20px;
+    padding: 24px 24px 48px;
+  }
+  .header-inner { padding: 14px 24px; }
 }
 
-#qr-code-master {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
+/* ── Responsive: mobile — stack vertically ────────────────────── */
+@media (max-width: 700px) {
+  main {
+    grid-template-columns: 1fr;
+    padding: 20px 16px 48px;
+    gap: 20px;
+  }
+  .header-inner { padding: 12px 16px; }
+  .card { padding: 20px; }
+  .field-row { flex-direction: column; gap: 12px; }
 
-#qr-code {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+  .preview {
+    position: static;
+    order: -1;
+  }
+  .preview-card { min-height: auto; }
+  .preview-empty { padding: 32px 16px; }
 
-#qr-img {
-    border: 1px solid black;
-    border-radius: 15px;
-}
+  /* Hide nav link text, show icons only */
+  .nav-link-text { display: none; }
+  .nav-link { font-size: 1.1rem; }
+  nav { gap: 14px; }
 
-#loading-spinner {
-    display: none;
-    margin-top: 20px;
-    margin: auto;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: radial-gradient(farthest-side, #000000 95%, #0000) 50% 1.1px/13.4px 13.4px no-repeat,
-        radial-gradient(farthest-side, #0000 calc(100% - 15.7px), rgba(0, 0, 0, 0.1) 0);
-    animation: spinner-aur408 1s infinite linear;
-}
-
-@keyframes spinner-aur408 {
-    to {
-        transform: rotate(1turn);
-    }
-}
-
-#optional-params {
-    margin: 35px auto;
-}
-
-@media screen and (max-width: 800px) {
-    .site-name{
-        font-size: 15px;
-    }
-
-    .logo {
-        width: 35px;
-        height: 35px;
-    }
-
-    label {
-        font-size: 20px;
-    }
-
-    #simple-config,
-    #radial-config {
-        flex-direction: column;
-    }
-
-    #simple-config {
-        max-width: 500px;
-    }
-
-    #radial-config {
-        max-width: 800px;
-    }
-
-    #text-input-text {
-        font-size: 30px;
-    }
-
-    #generate-btn {
-        margin: 60px 0 20px 0;
-    }
-
-    #loading-spinner {
-        margin-top: 20px;
-    }
-
-    #optional-params {
-        margin: 35px auto;
-    }
-
-    .qr-type-div,
-    #fill-color,
-    #background-color,
-    #gradient-color,
-    #gradient2-color {
-        gap: 20px;
-    }
-
-    #qr-input {
-        width: -webkit-fill-available;
-        margin-left: 30px;
-        margin-right: 30px;
-    }
-
-    .color-input {
-        margin-top: 10px;
-    }
+  .wordmark { font-size: 0.85rem; }
+  .logo-group img { width: 28px; height: 28px; }
 }

@@ -1,0 +1,70 @@
+name: Tests & Coverage
+
+on:
+  push:
+    branches: ["*"]
+    paths:
+      - "**.py"
+      - "pyproject.toml"
+      - ".github/workflows/tests.yaml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "**.py"
+      - "pyproject.toml"
+      - ".github/workflows/tests.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install dependencies
+        run: uv sync --group dev
+
+      - name: Run tests with coverage
+        run: |
+          uv run python -m pytest \
+            -n auto \
+            --cov=. \
+            --cov-report=term-missing:skip-covered \
+            --cov-report=xml:coverage.xml \
+            --cov-config=pyproject.toml \
+            --junitxml=junit.xml \
+            -q
+
+      - name: Upload coverage to Codecov
+        if: matrix.python-version == '3.13' && github.event_name != 'pull_request'
+        uses: codecov/codecov-action@v5
+        with:
+          files: coverage.xml
+          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-py${{ matrix.python-version }}
+          path: |
+            junit.xml
+            coverage.xml
+          retention-days: 30
