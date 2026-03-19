@@ -1,7 +1,6 @@
 """Integration tests for error handler middleware — covers all exception handlers."""
 
 
-
 class TestValidationErrors:
     """RequestValidationError handler via invalid query params."""
 
