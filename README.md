@@ -11,7 +11,7 @@
 
 <p align="center">
 <a href="https://github.com/spoo-me/qr"><img src="https://img.shields.io/github/stars/spoo-me/qr?style=flat&color=6a5cf4" alt="Stars"></a>
-<a href="https://github.com/spoo-me/qr/actions"><img src="https://github.com/spoo-me/qr/actions/workflows/tests.yaml/badge.svg" alt="Tests"></a>
+<a href="https://codecov.io/gh/spoo-me/qr"><img src="https://codecov.io/gh/spoo-me/qr/graph/badge.svg?token=nUKz07qV2h" alt="codecov"></a>
 <a href="https://spoo.me/discord"><img src="https://img.shields.io/discord/1192388005206433892?logo=discord" alt="Discord"></a>
 <a href="https://twitter.com/spoo_me"><img src="https://img.shields.io/twitter/follow/spoo_me?logo=x&label=%40spoo_me&color=0bf" alt="X (formerly Twitter) Follow"></a>
 </p>
