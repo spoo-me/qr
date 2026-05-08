@@ -69,7 +69,7 @@ jobs:
       QR_IMAGE_TAG: ${{ needs.build.outputs.image-tag }}
     steps:
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ secrets.VPS_HOST }}
           username: root
@@ -89,7 +89,7 @@ jobs:
             docker image prune -f
 
       - name: Verify health
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ secrets.VPS_HOST }}
           username: root
