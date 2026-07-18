@@ -39,7 +39,7 @@ API_CONTACT = {
 }
 
 API_LICENSE = {
-    "name": "Apache 2.0",
+    "name": "AGPL-3.0",
     "url": "https://github.com/spoo-me/qr/blob/main/LICENSE",
 }
 
