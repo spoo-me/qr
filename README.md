@@ -220,5 +220,5 @@ Contributions are always welcome! Here's how you can contribute:
 All Rights Reserved</h6>
 
 <p align="center">
- <a href="https://github.com/spoo-me/qr/blob/main/LICENSE"><img src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=APACHE-2.0&logoColor=d9e0ee&colorA=363a4f&colorB=b7bdf8"/></a>
+ <a href="https://github.com/spoo-me/qr/blob/main/LICENSE"><img src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=AGPL-3.0&logoColor=d9e0ee&colorA=363a4f&colorB=b7bdf8"/></a>
 </p>
