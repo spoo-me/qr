@@ -40,7 +40,7 @@ jobs:
           uv pip install --group dev
 
       - name: Lint with Ruff
-        run: uvx ruff check
+        run: uv run --frozen ruff check
 
       - name: Format with Ruff
-        run: uvx ruff format --check
+        run: uv run --frozen ruff format --check
